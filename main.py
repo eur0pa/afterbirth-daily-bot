@@ -1,7 +1,4 @@
 import steamapi
-import struct
-
-from binascii import unhexlify
 
 API_KEY = ''
 APPID = '250900'
