@@ -130,9 +130,13 @@ class Leaderboard(object):
             for score in details:
                 tmp.append(self.swap32(int(score, 16)))
 
-            if (tmp[1] > tmp[0] or   # schwag > stage
-                tmp[9] > tmp[0]):    # item penalty > stage
-                continue
+            try:
+                if ((tmp[1] > tmp[0]) or
+                    (tmp[9] > tmp[0]) or
+                    (tmp[12] < entry['score'])):
+                    continue
+            except:
+                pass
 
             clean.append(entry)
 
