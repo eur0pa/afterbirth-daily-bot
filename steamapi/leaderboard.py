@@ -10,7 +10,7 @@ __author__ = 'europa'
 class Leaderboard(object):
     URL_BASE = 'http://steamcommunity.com'
 
-    def __init__(self, appid=None, date=None, lbid=None, start=0, end=100):
+    def __init__(self, appid=None, date=None, lbid=None, start=0, end=250):
         self._appid = appid
         self._lbid = lbid
         self._date = date
@@ -63,7 +63,7 @@ class Leaderboard(object):
         if self._date is None:
             board_name = (
                 datetime.date.today() -
-                datetime.timedelta(hours=11)).strftime(
+                datetime.timedelta(1)).strftime(
                 '%Y%m%d') + '_scores'
         else:
             board_name = date + '_scores'
@@ -131,9 +131,11 @@ class Leaderboard(object):
                 tmp.append(self.swap32(int(score, 16)))
 
             try:
-                if ((tmp[1] > tmp[0]) or
-                    (tmp[9] > tmp[0]) or
-                    (tmp[12] < entry['score'])):
+                if ((tmp[1] > tmp[0]) or            # schwag > stage
+                    (tmp[9] > tmp[0]) or            # item penalty > stage
+                    (tmp[12] > 0 and                # unk_13 > 0 &&
+                     tmp[12] < entry['score']) or   # score > unk_13
+                    (tmp[6] > 25000)):              # exp.bonus > 25k
                     continue
             except:
                 pass
