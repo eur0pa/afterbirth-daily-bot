@@ -1,6 +1,6 @@
 import steamapi
 
-API_KEY = 'C2BB07C451A43A15FE104D31D691B623'
+API_KEY = ''
 APPID = '250900'
 
 if __name__ == '__main__':
