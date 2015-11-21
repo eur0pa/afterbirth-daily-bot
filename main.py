@@ -20,7 +20,7 @@ if __name__ == '__main__':
     winner = steamapi.user.SteamUser(today.winner['steamid'])
 
     print "today's winner is {winner} with {points} points!".format(
-        winner=winner.name,
+        winner=(winner.name).encode('utf8'),
         points=today.winner['score'])
 
     # today's cheater

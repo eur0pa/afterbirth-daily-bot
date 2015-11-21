@@ -61,12 +61,9 @@ class Leaderboard(object):
 
     def _get_leaderboard_id(self):
         if self._date is None:
-            board_name = (
-                datetime.date.today() -
-                datetime.timedelta(1)).strftime(
-                '%Y%m%d') + '_scores'
-        else:
-            board_name = date + '_scores'
+            date = datetime.date.today().strftime('%Y%m%d')
+
+        board_name = date + '_scores'
 
         url = '{base}/stats/{appid}/leaderboards/?xml=1'.format(
             base=self.URL_BASE,
@@ -81,9 +78,14 @@ class Leaderboard(object):
 
         for board in data['response']['leaderboard']:
             if board['name'] == board_name:
-                return board['lbid']
+                if board['entries'] < 100:
+                    self._date = (
+                        datetime.date.today() -
+                        datetime.timedelta(1).strftime(
+                        '%Y%m%d'))
+                    self._lbid = self._get_leaderboard_id()
 
-        raise ValueError('cannot find a leaderboard for the given date')
+                return board['lbid']
 
     def _get_leaderboard_entries(self):
         url = '{base}/stats/{appid}/leaderboards/{lbid}/?xml=1&start={start}&end={end}'.format(
