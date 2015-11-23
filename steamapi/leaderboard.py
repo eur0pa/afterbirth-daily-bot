@@ -61,7 +61,8 @@ class Leaderboard(object):
 
     def _get_leaderboard_id(self):
         if self._date is None:
-            date = datetime.date.today().strftime('%Y%m%d')
+            date = (datetime.datetime.now() -
+                    datetime.timedelta(hours=11)).strftime('%Y%m%d')
 
         board_name = date + '_scores'
 
