@@ -135,6 +135,7 @@ class Leaderboard(object):
 
             try:
                 if ((tmp[1] > tmp[0]) or            # schwag > stage
+                    (tmp[1] > 40000) or             # schwag > 40k
                     (tmp[9] > tmp[0]) or            # item penalty > stage
                     (tmp[12] > 0 and                # unk_13 > 0 &&
                      tmp[12] < entry['score']) or   # score > unk_13
